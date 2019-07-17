@@ -1,0 +1,38 @@
+server:
+  port: 7777
+  address: localhost
+
+spring:
+  application:
+    name: config
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/config
+  profiles:
+    active: native
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  server:
+    port: 11777
+
+eureka:
+  instance:
+    ip-address: ${server.address}
+    instance-id: ${server.address}:${server.port}
+    prefer-ip-address: true
+    metadataMap:
+       management.port: ${management.server.port}
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
